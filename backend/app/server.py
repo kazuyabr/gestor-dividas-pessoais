@@ -33,3 +33,5 @@ async def add_charset_middleware(request, call_next):
 
 app.include_router(routes.router, prefix="/api/v1")
 app.include_router(health.router, prefix="/api/v1")
+
+# -*- coding: utf-8 -*-
