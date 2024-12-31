@@ -17,7 +17,7 @@ def get_db():
 # Rotas de Usuário
 @router.post("/usuarios/", response_model=schemas.Usuario)
 def criar_usuario(usuario: schemas.UsuarioCreate, db: Session = Depends(get_db)):
-    db_usuario = models.Usuario(**usuario.dict())
+    db_usuario = models.Usuario(**usuario.model_dump())
     db.add(db_usuario)
     db.commit()
     db.refresh(db_usuario)
@@ -30,12 +30,11 @@ def listar_usuarios(db: Session = Depends(get_db)):
 # Rotas de Dívida
 @router.post("/dividas/", response_model=schemas.Divida)
 def criar_divida(divida: schemas.DividaCreate, usuario_id: int, db: Session = Depends(get_db)):
-    db_divida = models.Divida(**divida.dict(), usuario_id=usuario_id)
+    db_divida = models.Divida(**divida.model_dump(), usuario_id=usuario_id)  # Atualizado
     db.add(db_divida)
     db.commit()
     db.refresh(db_divida)
     return db_divida
-
 @router.get("/dividas/", response_model=List[schemas.Divida])
 def listar_dividas(db: Session = Depends(get_db)):
     return db.query(models.Divida).all()

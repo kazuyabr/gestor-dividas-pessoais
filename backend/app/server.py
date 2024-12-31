@@ -6,6 +6,9 @@ from .database.database import engine
 from .models import models
 from .config import settings
 
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -33,5 +36,3 @@ async def add_charset_middleware(request, call_next):
 
 app.include_router(routes.router, prefix="/api/v1")
 app.include_router(health.router, prefix="/api/v1")
-
-# -*- coding: utf-8 -*-
