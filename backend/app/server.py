@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import routes
+from .routes import routes, health
 from .database.database import engine
 from .models import models
 from .config import settings
@@ -24,3 +24,4 @@ app.add_middleware(
 )
 
 app.include_router(routes.router, prefix="/api/v1")
+app.include_router(health.router, prefix="/api/v1")
