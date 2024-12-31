@@ -1,11 +1,23 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import Optional, List
 
+class UsuarioBase(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    nome: str
+    email: str
+
+class UsuarioCreate(UsuarioBase):
+    senha: str
+
+class Usuario(UsuarioBase):
+    id: int
+
 class DividaBase(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     valor: float
     data_vencimento: datetime
-    descricao: Optional[str] = None
+    descricao: str
 
 class DividaCreate(DividaBase):
     pass
@@ -13,20 +25,3 @@ class DividaCreate(DividaBase):
 class Divida(DividaBase):
     id: int
     usuario_id: int
-
-    class Config:
-        from_attributes = True
-
-class UsuarioBase(BaseModel):
-    nome: str
-    email: EmailStr
-
-class UsuarioCreate(UsuarioBase):
-    senha: str
-
-class Usuario(UsuarioBase):
-    id: int
-    dividas: List[Divida] = []
-
-    class Config:
-        from_attributes = True
