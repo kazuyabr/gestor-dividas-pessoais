@@ -1,6 +1,9 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import ConfigDict
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    
     # Database
     DB_USER: str
     DB_PASSWORD: str
@@ -16,8 +19,5 @@ class Settings(BaseSettings):
     API_DESCRIPTION: str
     API_VERSION: str
     CORS_ORIGINS: list
-
-    class Config:
-        env_file = ".env"
 
 settings = Settings()
