@@ -1,15 +1,14 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "gestor de dividas",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "cross-env CHROME_BIN=%USERPROFILE%\\.cache\\puppeteer\\chrome\\win64-131.0.6778.204\\chrome-win64\\chrome.exe ng test --watch=false --code-coverage"
   },
-  "private": true,
-  "dependencies": {
+    "private": true,    "dependencies": {
     "@angular/animations": "^19.1.0-next.0",
     "@angular/common": "^19.1.0-next.0",
     "@angular/compiler": "^19.1.0-next.0",
@@ -27,12 +26,16 @@
     "@angular/cli": "^19.1.0-next.2",
     "@angular/compiler-cli": "^19.1.0-next.0",
     "@types/jasmine": "~5.1.0",
+    "cross-env": "^7.0.3",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
+    "karma-edge-launcher": "^0.4.2",
+    "karma-firefox-launcher": "^2.1.3",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "puppeteer": "^23.11.1",
     "typescript": "~5.7.2"
   }
 }

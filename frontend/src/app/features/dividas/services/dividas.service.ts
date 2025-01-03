@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Divida, DividaCreate, FiltrosDivida } from '../interfaces/divida.interface';
+import { Divida, DividaCreate } from '../interfaces/divida.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,25 +29,3 @@ export class DividasService {
     return this.http.delete<void>(`/dividas/${id}`);
   }
 }
-
-  confirmarEExcluirDivida(id: number): Observable<boolean> {
-    return new Observable(observer => {
-      const confirmacao = confirm('Tem certeza que deseja excluir esta dívida?');
-
-      if (confirmacao) {
-        this.excluirDivida(id).subscribe({
-          next: () => {
-            observer.next(true);
-            observer.complete();
-          },
-          error: (error) => {
-            observer.error(error);
-            observer.complete();
-          }
-        });
-      } else {
-        observer.next(false);
-        observer.complete();
-      }
-    });
-  }

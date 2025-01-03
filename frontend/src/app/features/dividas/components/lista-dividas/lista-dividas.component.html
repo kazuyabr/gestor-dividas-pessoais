@@ -2,7 +2,7 @@
   <div class="acoes">
     <button (click)="novaDivida()">Nova Dívida</button>
     <div class="filtros">
-      <select [(ngModel)]="filtros.status">
+      <select [(ngModel)]="filtros.status" *ngIf="filtros">
         <option value="">Todos os Status</option>
         <option value="Pendente">Pendente</option>
         <option value="Pago">Pago</option>
@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <table>
+  <table *ngIf="dividas && dividas.length > 0">
     <thead>
       <tr>
         <th>Título</th>

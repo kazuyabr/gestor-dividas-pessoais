@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DividasService } from '../../services/dividas.service';
 import { Divida } from '../../interfaces/divida.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-divida',
   templateUrl: './form-divida.component.html',
-  styleUrls: ['./form-divida.component.scss']
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule]
 })
 export class FormDividaComponent implements OnInit {
   dividaForm: FormGroup;

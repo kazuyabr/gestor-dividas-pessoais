@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { DividasService } from '../../services/dividas.service';
-import { Divida, FiltrosDivida } from '../../interfaces/divida.interface';
+import { Divida } from '../../interfaces/divida.interface';
 
 @Component({
   selector: 'app-lista-dividas',
   templateUrl: './lista-dividas.component.html',
-  styleUrls: ['./lista-dividas.component.scss']
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class ListaDividasComponent implements OnInit {
   dividas: Divida[] = [];
-  filtros: FiltrosDivida = {};
+  filtros = {
+    status: '',
+    ordenacao: 'asc',
+    campo: 'dataVencimento'
+  };
 
   constructor(private dividasService: DividasService) {}
 
@@ -24,35 +31,27 @@ export class ListaDividasComponent implements OnInit {
     });
   }
 
-  handleExclusao(id: number): void {
-    this.dividasService.confirmarEExcluirDivida(id).subscribe({
-      next: (confirmado) => {
-        if (confirmado) {
-          this.carregarDividas();
-        }
-      },
-      error: (error) => console.error('Erro ao excluir dívida:', error)
+  excluirDivida(id: number): void {
+    if (confirm('Deseja realmente excluir esta dívida?')) {
+      this.dividasService.excluirDivida(id).subscribe({
+        next: () => this.carregarDividas(),
+        error: (error) => console.error('Erro ao excluir dívida:', error)
+      });
+    }
+  }
+
+  aplicarFiltros(): void {
+    let dividasFiltradas = [...this.dividas];
+
+    if (this.filtros.status) {
+      dividasFiltradas = dividasFiltradas.filter(d => d.status === this.filtros.status);
+    }
+
+    this.dividas = dividasFiltradas.sort((a, b) => {
+      const fator = this.filtros.ordenacao === 'asc' ? 1 : -1;
+      const valorA = String(a[this.filtros.campo as keyof Divida]);
+      const valorB = String(b[this.filtros.campo as keyof Divida]);
+      return valorA > valorB ? fator : -fator;
     });
   }
 }
-
-  aplicarFiltros(filtros: FiltrosDivida): void {
-    this.dividas = this.dividas.sort((a, b) => {
-      const fator = filtros.ordenacao === 'asc' ? 1 : -1;
-
-      switch(filtros.campo) {
-        case 'titulo':
-          return fator * a.titulo.localeCompare(b.titulo);
-        case 'valor':
-          return fator * (a.valor - b.valor);
-        case 'dataVencimento':
-          return fator * (new Date(a.dataVencimento).getTime() - new Date(b.dataVencimento).getTime());
-        default:
-          return 0;
-      }
-    });
-
-    if (filtros.status) {
-      this.dividas = this.dividas.filter(d => d.status === filtros.status);
-    }
-  }
