@@ -2,17 +2,17 @@
   "name": "gestor-dividas-pessoais",
   "version": "0.0.1",
   "scripts": {
-    "dev": "ng serve",
-    "start": "ng serve --configuration production",
+    "dev": "node set-env.js serve",
+    "start": "node set-env.js serve --configuration production",
     "build": "ng build --configuration production",
     "build:dev": "ng build",
+    "watch": "node set-env.js serve --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
     "clean": "rd /s /q dist && rd /s /q node_modules",
     "reset": "yarn clean && yarn install"
   },
-  "private": true,
-  "dependencies": {
+  "private": true,  "dependencies": {
     "@angular/animations": "^17.0.0",
     "@angular/common": "^17.0.0",
     "@angular/compiler": "^17.0.0",
@@ -30,6 +30,7 @@
     "@angular/cli": "^17.0.0",
     "@angular/compiler-cli": "^17.0.0",
     "@types/jasmine": "~4.3.0",
+    "dotenv": "^16.4.7",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
