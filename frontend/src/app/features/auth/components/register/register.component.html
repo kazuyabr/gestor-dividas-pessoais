@@ -1,0 +1,73 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="auth-container" [style.display]="isLoading ? 'none' : 'flex'">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Crie sua conta</h2>
+      <p>Comece a organizar suas finanças hoje</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input
+            id="nome"
+            type="text"
+            formControlName="nome"
+            placeholder="Seu nome completo"
+            [class.is-invalid]="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched">
+          Nome é obrigatório
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="seu@email.com"
+            [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Email inválido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            id="senha"
+            type="password"
+            formControlName="senha"
+            placeholder="Mínimo 6 caracteres"
+            [class.is-invalid]="registerForm.get('senha')?.invalid && registerForm.get('senha')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="registerForm.get('senha')?.invalid && registerForm.get('senha')?.touched">
+          Senha deve ter no mínimo 6 caracteres
+        </div>
+      </div>
+
+      <button type="submit" class="btn-register" [disabled]="!registerForm.valid">
+        <span>Criar Conta</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+
+      <div class="auth-footer">
+        <p>Já possui uma conta?</p>
+        <a routerLink="/auth/login" class="login-link">Fazer login</a>
+      </div>
+    </form>
+  </div>
+</div>

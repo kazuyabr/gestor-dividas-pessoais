@@ -1,0 +1,56 @@
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="auth-container" [style.display]="isLoading ? 'none' : 'flex'">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Bem-vindo de volta!</h2>
+      <p>Faça login para gerenciar suas dívidas</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Seu email"
+            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Email inválido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            id="senha"
+            type="password"
+            formControlName="senha"
+            placeholder="Sua senha"
+            [class.is-invalid]="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
+          Senha é obrigatória
+        </div>
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
+        <span>Entrar</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+
+      <div class="auth-footer">
+        <p>Não tem uma conta?</p>
+        <a routerLink="/auth/register" class="register-link">Criar conta</a>
+      </div>
+    </form>
+  </div>
+</div>

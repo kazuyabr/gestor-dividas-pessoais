@@ -1,0 +1,45 @@
+
+.filtros-container {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  .filtro {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+
+    label {
+      margin-bottom: 8px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+
+      &:focus {
+        outline: none;
+        border-color: #2196F3;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .filtros-container {
+    flex-direction: column;
+    gap: 10px;
+
+    .filtro {
+      min-width: 100%;
+    }
+  }
+}
