@@ -9,39 +9,32 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="username">Email</label>
         <div class="input-group">
           <i class="fas fa-envelope"></i>
           <input
-            id="email"
+            id="username"
             type="email"
-            formControlName="email"
+            formControlName="username"
             placeholder="Seu email"
-            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
           >
-        </div>
-        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-          Email inválido
         </div>
       </div>
 
       <div class="form-group">
-        <label for="senha">Senha</label>
+        <label for="password">Senha</label>
         <div class="input-group">
           <i class="fas fa-lock"></i>
           <input
-            id="senha"
+            id="password"
             type="password"
-            formControlName="senha"
+            formControlName="password"
             placeholder="Sua senha"
-            [class.is-invalid]="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
           >
         </div>
-        <div class="error-message" *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
-          Senha é obrigatória
-        </div>
       </div>
-
       <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
         <span>Entrar</span>
         <i class="fas fa-arrow-right"></i>

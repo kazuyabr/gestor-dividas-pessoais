@@ -1,5 +1,7 @@
 // Produção
 export const environment = {
   production: true,
-  apiUrl: 'https://api.seudominio.com'
+  apiUrl: 'http://api.gestordividas.com',
+  apiPort: 80,
+  apiVersion: 'v1'
 };

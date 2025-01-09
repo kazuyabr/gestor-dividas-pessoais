@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, LoadingComponent]
+  imports: [CommonModule, ReactiveFormsModule, LoadingComponent]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
-  isLoading = true;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -24,22 +22,24 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', Validators.required]
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
-  }
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 800);
   }
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      this.isLoading = true;
       this.authService.login(this.loginForm.value).subscribe({
-        next: () => this.router.navigate(['/dashboard']),
-        error: (error) => console.error('Erro no login:', error)
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error: unknown) => {
+          console.error('Erro no login:', error);
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
       });
     }
   }

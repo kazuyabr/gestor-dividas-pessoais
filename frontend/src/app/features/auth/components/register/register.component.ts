@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  isLoading = true;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,12 +37,16 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
+      this.isLoading = true;
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
           this.router.navigate(['/auth/login']);
         },
-        error: (error) => {
+        error: (error: unknown) => {
           console.error('Erro no registro:', error);
+        },
+        complete: () => {
+          this.isLoading = false;
         }
       });
     }
