@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from app.server import app
+from src.server import app
 import random
 from datetime import datetime
 
