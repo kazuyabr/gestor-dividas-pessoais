@@ -1,5 +1,7 @@
-// Homologação/Staging
+// Homologação
 export const environment = {
   production: false,
-  apiUrl: 'https://staging-api.seudominio.com'
+  apiUrl: 'http://staging.api.gestordividas.com',
+  apiPort: 8000,
+  apiVersion: 'v1'
 };

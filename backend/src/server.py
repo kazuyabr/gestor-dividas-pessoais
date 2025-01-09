@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from .routes import usuarios_routes, dividas_routes, health
+from .routes import usuarios_routes, dividas_routes, health, auth_routes
 from .database.database import engine
 from .models import models
 from .config import settings
@@ -115,4 +115,10 @@ app.include_router(
     health.router,
     prefix="/api/v1",
     tags=["health"]
+)
+
+app.include_router(
+    auth_routes.router,
+    prefix="/api/v1/auth",
+    tags=["auth"]
 )

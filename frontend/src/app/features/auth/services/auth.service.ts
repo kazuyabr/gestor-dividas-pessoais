@@ -1,39 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { User, UserLogin, UserRegister } from '../interfaces/user.interface';
-import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { AuthToken } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
-  private apiUrl = environment.apiUrl;
+  private baseUrl = `${environment.apiUrl}:${environment.apiPort}/api/${environment.apiVersion}`;
+  private tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('token'));
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
-  login(credentials: UserLogin): Observable<User> {
-    return this.http.post<User>('/usuarios/login', credentials).pipe(
-      tap(user => this.currentUserSubject.next(user))
+  register(userData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/usuarios`, userData);
+  }
+
+  login(credentials: {username: string, password: string}): Observable<AuthToken> {
+    const formData = new FormData();
+    formData.append('username', credentials.username);
+    formData.append('password', credentials.password);
+
+    return this.http.post<AuthToken>(`${this.baseUrl}/auth/token`, formData).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.access_token);
+        this.tokenSubject.next(response.access_token);
+      })
     );
   }
 
-  register(userData: UserRegister): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/usuarios/`, userData);
+  logout(): void {
+    localStorage.removeItem('token');
+    this.tokenSubject.next(null);
   }
 
-  logout(): void {
-    this.currentUserSubject.next(null);
+  getToken(): string | null {
+    return this.tokenSubject.value;
   }
 
   isAuthenticated(): boolean {
-    return !!this.currentUserSubject.value;
-  }
-
-  redirectToLogin(): void {
-    this.router.navigate(['/auth/login']);
+    return !!this.getToken();
   }
 }
