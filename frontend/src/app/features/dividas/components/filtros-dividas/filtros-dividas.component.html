@@ -1,0 +1,28 @@
+<div class="filtros-container">
+  <div class="filtro">
+    <label>Status</label>
+    <select [(ngModel)]="filtros.status" (change)="aplicarFiltros()">
+      <option value="">Todos</option>
+      <option value="Pendente">Pendente</option>
+      <option value="Pago">Pago</option>
+      <option value="Atrasado">Atrasado</option>
+    </select>
+  </div>
+
+  <div class="filtro">
+    <label>Ordenar por</label>
+    <select [(ngModel)]="filtros.campo" (change)="aplicarFiltros()">
+      <option value="titulo">Título</option>
+      <option value="valor">Valor</option>
+      <option value="dataVencimento">Data de Vencimento</option>
+    </select>
+  </div>
+
+  <div class="filtro">
+    <label>Ordem</label>
+    <select [(ngModel)]="filtros.ordenacao" (change)="aplicarFiltros()">
+      <option value="asc">Crescente</option>
+      <option value="desc">Decrescente</option>
+    </select>
+  </div>
+</div>

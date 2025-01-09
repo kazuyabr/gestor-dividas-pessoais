@@ -1,0 +1,41 @@
+<div class="form-divida">
+  <h2>{{isEdicao ? 'Editar' : 'Nova'}} Dívida</h2>
+
+  <form [formGroup]="dividaForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label for="titulo">Título</label>
+      <input id="titulo" type="text" formControlName="titulo">
+    </div>
+
+    <div class="form-field">
+      <label for="valor">Valor</label>
+      <input id="valor" type="number" formControlName="valor">
+    </div>
+
+    <div class="form-field">
+      <label for="dataVencimento">Data de Vencimento</label>
+      <input id="dataVencimento" type="date" formControlName="dataVencimento">
+    </div>
+
+    <div class="form-field">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="Pendente">Pendente</option>
+        <option value="Pago">Pago</option>
+        <option value="Atrasado">Atrasado</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="observacoes">Observações</label>
+      <textarea id="observacoes" formControlName="observacoes"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="router.navigate(['/dividas'])">Cancelar</button>
+      <button type="submit" [disabled]="!dividaForm.valid">
+        {{isEdicao ? 'Atualizar' : 'Criar'}}
+      </button>
+    </div>
+  </form>
+</div>
