@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, LoadingComponent]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  isLoading = true;
 
   constructor(
     private fb: FormBuilder,
@@ -25,11 +29,21 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit(): void {
+  ngOnInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 800);
+  }
+
+  onSubmit() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
-        next: () => this.router.navigate(['/auth/login']),
-        error: (error) => console.error('Erro no registro:', error)
+        next: () => {
+          this.router.navigate(['/auth/login']);
+        },
+        error: (error) => {
+          console.error('Erro no registro:', error);
+        }
       });
     }
   }

@@ -1,22 +1,56 @@
-<div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h2>Login</h2>
+<app-loading *ngIf="isLoading"></app-loading>
 
-    <div class="form-field">
-      <label for="email">Email</label>
-      <input id="email" type="email" formControlName="email">
+<div class="auth-container" [style.display]="isLoading ? 'none' : 'flex'">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Bem-vindo de volta!</h2>
+      <p>Faça login para gerenciar suas dívidas</p>
     </div>
 
-    <div class="form-field">
-      <label for="senha">Senha</label>
-      <input id="senha" type="password" formControlName="senha">
-    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Seu email"
+            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          Email inválido
+        </div>
+      </div>
 
-    <button type="submit" [disabled]="!loginForm.valid">Entrar</button>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            id="senha"
+            type="password"
+            formControlName="senha"
+            placeholder="Sua senha"
+            [class.is-invalid]="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched"
+          >
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
+          Senha é obrigatória
+        </div>
+      </div>
 
-    <p>
-      Não tem uma conta?
-      <a routerLink="/auth/register">Cadastre-se</a>
-    </p>
-  </form>
+      <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
+        <span>Entrar</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+
+      <div class="auth-footer">
+        <p>Não tem uma conta?</p>
+        <a routerLink="/auth/register" class="register-link">Criar conta</a>
+      </div>
+    </form>
+  </div>
 </div>
