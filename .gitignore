@@ -172,3 +172,4 @@ cython_debug/
 
 # Fetch client
 .fetch-client/
+node_modules

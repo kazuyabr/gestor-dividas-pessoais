@@ -1,6 +1,7 @@
 from pydantic import Field, EmailStr
 from datetime import datetime
 from .base_schema import BaseSchema
+from typing import Optional
 
 class UsuarioBase(BaseSchema):
     nome: str = Field(..., description="Nome completo do usuário")
@@ -11,4 +12,4 @@ class UsuarioCreate(UsuarioBase):
 
 class Usuario(UsuarioBase):
     id: int
-    data_criacao: datetime
+    data_criacao: Optional[datetime] = Field(default_factory=datetime.now)
