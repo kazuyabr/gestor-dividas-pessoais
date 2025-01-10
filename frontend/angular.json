@@ -19,7 +19,7 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "public/favicon.ico",
+              "src/assets/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -82,5 +82,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
