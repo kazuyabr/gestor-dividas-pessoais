@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Divida, DividaCreate } from '../interfaces/divida.interface';
+import { Divida, DividaBase } from '../interfaces/divida.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class DividasService {
     return this.http.get<Divida>(`/dividas/${id}`);
   }
 
-  criarDivida(divida: DividaCreate, usuario_id: number): Observable<Divida> {
+  criarDivida(divida: DividaBase, usuario_id: number): Observable<Divida> {
     return this.http.post<Divida>(`/dividas/?usuario_id=${usuario_id}`, divida);
   }
 

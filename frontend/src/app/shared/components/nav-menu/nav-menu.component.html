@@ -1,0 +1,24 @@
+<nav class="nav-menu">
+  <div class="nav-brand">
+    <h1>Gestor de Dívidas</h1>
+  </div>
+
+  <ul class="nav-links">
+    <li *ngFor="let item of menuItems">
+      <a [routerLink]="item.path" routerLinkActive="active">
+        <i class="fas fa-{{item.icon}}"></i>
+        <span>{{item.label}}</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="nav-actions">
+    <button class="theme-toggle" (click)="toggleTheme()">
+      <i class="fas" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+    </button>
+    <button class="logout-btn" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Sair</span>
+    </button>
+  </div>
+</nav>

@@ -8,7 +8,7 @@ export interface Divida {
     usuario_id: number;
 }
 
-export interface DividaCreate {
+export interface DividaBase {
     titulo: string;
     valor: number;
     dataVencimento: string;

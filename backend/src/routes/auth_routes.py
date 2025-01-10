@@ -46,10 +46,19 @@ async def login_for_access_token(
     Retorna um token JWT que deve ser usado no header Authorization das requisições.
     """
     user = db.query(Usuario).filter(Usuario.email == form_data.username).first()
-    if not user or not verify_password(form_data.password, user.senha):
+    
+    # Verifica se o usuário existe
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuário não encontrado"
+        )
+    
+    # Verifica se a senha está correta
+    if not verify_password(form_data.password, user.senha):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Email ou senha incorretos",
+            detail="Senha incorreta",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
