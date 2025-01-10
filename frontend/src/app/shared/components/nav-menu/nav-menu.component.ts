@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../features/auth/services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,7 +10,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule]
 })
-export class NavMenuComponent implements OnInit {
+export class NavMenuComponent {
   isDarkMode = localStorage.getItem('theme') === 'dark';
   menuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: 'chart-line' },
@@ -21,20 +20,27 @@ export class NavMenuComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
-
-  ngOnInit() {
+  ) {
     if (this.isDarkMode) {
       document.body.classList.add('dark-theme');
     }
   }
 
-  logout() {
+  isActive(path: string): boolean {
+    return this.router.isActive(path, {
+      paths: 'exact',
+      queryParams: 'exact',
+      fragment: 'ignored',
+      matrixParams: 'ignored'
+    });
+  }
+
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
   }
 
-  toggleTheme() {
+  toggleTheme(): void {
     this.isDarkMode = !this.isDarkMode;
     document.body.classList.toggle('dark-theme');
     localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');

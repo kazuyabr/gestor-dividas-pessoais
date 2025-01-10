@@ -1,0 +1,14 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}

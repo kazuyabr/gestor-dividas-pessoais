@@ -1,31 +1,34 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Divida, DividaBase } from '../interfaces/divida.interface';
+import { environment } from '../../../../environments/environment';
+import { Divida, DividaCreate, DividaUpdate } from '../interfaces/divida.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DividasService {
+  private baseUrl = `${environment.apiUrl}:${environment.apiPort}/api/${environment.apiVersion}/dividas`;
+
   constructor(private http: HttpClient) {}
 
-  listarDividas(): Observable<Divida[]> {
-    return this.http.get<Divida[]>('/dividas/');
+  getDividas(): Observable<Divida[]> {
+    return this.http.get<Divida[]>(this.baseUrl);
   }
 
-  obterDivida(id: number): Observable<Divida> {
-    return this.http.get<Divida>(`/dividas/${id}`);
+  getDividaById(id: number): Observable<Divida> {
+    return this.http.get<Divida>(`${this.baseUrl}/${id}`);
   }
 
-  criarDivida(divida: DividaBase, usuario_id: number): Observable<Divida> {
-    return this.http.post<Divida>(`/dividas/?usuario_id=${usuario_id}`, divida);
+  createDivida(divida: DividaCreate): Observable<Divida> {
+    return this.http.post<Divida>(this.baseUrl, divida);
   }
 
-  atualizarDivida(id: number, divida: Partial<Divida>): Observable<Divida> {
-    return this.http.put<Divida>(`/dividas/${id}`, divida);
+  updateDivida(id: number, divida: DividaUpdate): Observable<Divida> {
+    return this.http.put<Divida>(`${this.baseUrl}/${id}`, divida);
   }
 
-  excluirDivida(id: number): Observable<void> {
-    return this.http.delete<void>(`/dividas/${id}`);
+  deleteDivida(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

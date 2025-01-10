@@ -8,17 +8,14 @@ export const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: '',
+    loadChildren: () => import('./layouts/dashboard-layout/dashboard-layout.module')
+      .then(m => m.DashboardLayoutModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
-  },
-  {
-    path: 'dashboard',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
-  {
-    path: 'dividas',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./features/dividas/dividas.module').then(m => m.DividasModule)
+    loadChildren: () => import('./features/auth/auth.module')
+      .then(m => m.AuthModule)
   }
 ];

@@ -1,33 +1,25 @@
-<app-nav-menu></app-nav-menu>
+  <div class="dashboard-container">
+    <div class="dashboard-content" *ngIf="!isLoading && !error" @fadeIn>
+      <div class="summary-cards">
+        <div class="card total-dividas" @fadeIn>
+          <h3>Total de Dívidas</h3>
+          <p class="value">{{summary?.totalDividas}}</p>
+        </div>
 
-<div class="dashboard-container">
-  <app-loading *ngIf="isLoading"></app-loading>
+        <div class="card valor-pendente" @fadeIn>
+          <h3>Valor Pendente</h3>
+          <p class="value">R$ {{summary?.totalValorPendente | number:'1.2-2'}}</p>
+        </div>
 
-  <div class="error-message" *ngIf="error" @fadeIn>
-    {{ error }}
-  </div>
+        <div class="card dividas-pagas" @fadeIn>
+          <h3>Dívidas Pagas</h3>
+          <p class="value">{{summary?.dividasPagas}}</p>
+        </div>
 
-  <div class="dashboard-content" *ngIf="!isLoading && !error" @fadeIn>
-    <div class="summary-cards">
-      <div class="card total-dividas" @fadeIn>
-        <h3>Total de Dívidas</h3>
-        <p class="value">{{summary?.totalDividas}}</p>
-      </div>
-
-      <div class="card valor-pendente" @fadeIn>
-        <h3>Valor Pendente</h3>
-        <p class="value">R$ {{summary?.totalValorPendente | number:'1.2-2'}}</p>
-      </div>
-
-      <div class="card dividas-pagas" @fadeIn>
-        <h3>Dívidas Pagas</h3>
-        <p class="value">{{summary?.dividasPagas}}</p>
-      </div>
-
-      <div class="card dividas-vencidas" @fadeIn>
-        <h3>Dívidas Vencidas</h3>
-        <p class="value">{{summary?.dividasVencidas}}</p>
+        <div class="card dividas-vencidas" @fadeIn>
+          <h3>Dívidas Vencidas</h3>
+          <p class="value">{{summary?.dividasVencidas}}</p>
+        </div>
       </div>
     </div>
   </div>
-</div>

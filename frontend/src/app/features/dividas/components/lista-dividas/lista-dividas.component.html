@@ -1,37 +1,41 @@
-<div class="lista-dividas">
-  <div class="acoes">
-    <button (click)="novaDivida()">Nova Dívida</button>
-    <div class="filtros">
-      <select [(ngModel)]="filtros.status" *ngIf="filtros">
-        <option value="">Todos os Status</option>
-        <option value="Pendente">Pendente</option>
-        <option value="Pago">Pago</option>
-        <option value="Atrasado">Atrasado</option>
-      </select>
-    </div>
+<div class="dividas-container">
+  <div class="dividas-header">
+    <h2>Minhas Dívidas</h2>
+    <button class="btn btn-primary" (click)="novaDivida()">
+      <i class="fas fa-plus"></i>
+      Nova Dívida
+    </button>
   </div>
 
-  <table *ngIf="dividas && dividas.length > 0">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Valor</th>
-        <th>Vencimento</th>
-        <th>Status</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let divida of dividas">
-        <td>{{divida.titulo}}</td>
-        <td>R$ {{divida.valor | number:'1.2-2'}}</td>
-        <td>{{divida.dataVencimento | date:'dd/MM/yyyy'}}</td>
-        <td>{{divida.status}}</td>
-        <td>
-          <button (click)="editarDivida(divida.id)">Editar</button>
-          <button (click)="excluirDivida(divida.id)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="filtros">
+    <select [(ngModel)]="filtros.status" aria-label="Filtrar por status">
+      <option value="TODOS">Todos os Status</option>
+      <option value="PENDENTE">Pendente</option>
+      <option value="PAGO">Pago</option>
+      <option value="ATRASADO">Atrasado</option>
+    </select>
+  </div>
+
+  <div class="dividas-grid">
+    <div class="divida-card" *ngFor="let divida of dividas">
+      <div class="card-header">
+        <h3>{{ divida.titulo }}</h3>
+        <span class="status" [ngClass]="divida.status.toLowerCase()">
+          {{ divida.status }}
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="valor">R$ {{ divida.valor | number:'1.2-2' }}</p>
+        <p class="vencimento">Vence em: {{ divida.data_vencimento | date:'dd/MM/yyyy' }}</p>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-icon" (click)="editarDivida(divida.id)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn btn-icon danger" (click)="excluirDivida(divida.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
