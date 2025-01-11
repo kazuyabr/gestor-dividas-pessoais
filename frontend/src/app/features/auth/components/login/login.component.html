@@ -1,49 +1,56 @@
 <app-loading *ngIf="isLoading"></app-loading>
+  <div class="auth-container" [style.display]="isLoading ? 'none' : 'flex'">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Bem-vindo de volta!</h2>
+        <p>Faça login para gerenciar suas dívidas</p>
+      </div>
 
-<div class="auth-container" [style.display]="isLoading ? 'none' : 'flex'">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h2>Bem-vindo de volta!</h2>
-      <p>Faça login para gerenciar suas dívidas</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <div class="form-group">
+          <label for="username">Email</label>
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input
+              id="username"
+              type="email"
+              formControlName="username"
+              placeholder="Seu email"
+              [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Sua senha"
+              [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            >
+          </div>
+        </div>
+        <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
+          <span>Entrar</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <!-- Adicionar mensagem de erro logo após o botão de login -->
+        <div class="error-message" *ngIf="errorMessage" [@notificationAnimation]>
+          {{ errorMessage }}
+        </div>
+          <div class="auth-footer">
+            <p>Não tem uma conta?</p>
+            <a [routerLink]="['/auth/register']" class="register-link">Criar conta</a>
+          </div>
+        </form>
     </div>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
-      <div class="form-group">
-        <label for="username">Email</label>
-        <div class="input-group">
-          <i class="fas fa-envelope"></i>
-          <input
-            id="username"
-            type="email"
-            formControlName="username"
-            placeholder="Seu email"
-            [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"
-          >
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-          <input
-            id="password"
-            type="password"
-            formControlName="password"
-            placeholder="Sua senha"
-            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-          >
-        </div>
-      </div>
-      <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
-        <span>Entrar</span>
-        <i class="fas fa-arrow-right"></i>
-      </button>
-
-      <div class="auth-footer">
-        <p>Não tem uma conta?</p>
-        <a routerLink="/auth/register" class="register-link">Criar conta</a>
-      </div>
-    </form>
   </div>
+<!-- Após o formulário -->
+<div class="error-alert" *ngIf="errorMessage">
+  {{ errorMessage }}
 </div>

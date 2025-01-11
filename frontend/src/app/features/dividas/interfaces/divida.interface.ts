@@ -2,22 +2,27 @@ export interface Divida {
     id: number;
     titulo: string;
     valor: number;
-    dataVencimento: string;
-    status: 'Pendente' | 'Pago' | 'Atrasado';
+    data_vencimento: string;
+    status: DividaStatus;
     observacoes?: string;
-    usuario_id: number;
+    created_at: string;
+    updated_at: string;
 }
+
+export type DividaStatus = 'PENDENTE' | 'PAGO' | 'ATRASADO';
 
 export interface DividaCreate {
     titulo: string;
     valor: number;
-    dataVencimento: string;
-    status: 'Pendente' | 'Pago' | 'Atrasado';
+    data_vencimento: string;
+    status: DividaStatus;
     observacoes?: string;
 }
 
-export interface FiltrosDivida {
-    status?: string;
+export interface DividaUpdate extends Partial<DividaCreate> {}
+
+export interface DividaFiltros {
+    status?: DividaStatus;
     ordenacao?: 'asc' | 'desc';
-    campo?: 'titulo' | 'valor' | 'dataVencimento';
+    campo?: keyof Divida;
 }

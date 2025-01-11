@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { authRoutes } from './auth.routes';
+import { AUTH_ROUTES } from './auth.routes';
 
 @NgModule({
-  imports: [RouterModule.forChild(authRoutes)],
+  imports: [RouterModule.forChild(AUTH_ROUTES)],
   exports: [RouterModule]
 })
 export class AuthModule { }
