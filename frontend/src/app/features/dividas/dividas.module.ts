@@ -5,17 +5,14 @@ import { ListaDividasComponent } from './components/lista-dividas/lista-dividas.
 import { CriarDividaComponent } from './components/criar-divida/criar-divida.component';
 import { EditarDividaComponent } from './components/editar-divida/editar-divida.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
-@NgModule({
-  declarations: [
-    ListaDividasComponent,
-    CriarDividaComponent,
-    EditarDividaComponent
-  ],
-  imports: [
-    CommonModule,
-    DividasRoutingModule,
-    ReactiveFormsModule
-  ]
-})
-export class DividasModule { }
+  @NgModule({
+    imports: [
+      CommonModule,
+      DividasRoutingModule,
+      ListaDividasComponent,
+      CriarDividaComponent,
+      EditarDividaComponent,
+      ReactiveFormsModule
+    ]
+  })
+  export class DividasModule { }
