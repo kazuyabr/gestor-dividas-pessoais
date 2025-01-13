@@ -172,3 +172,10 @@ cython_debug/
 
 # Fetch client
 .fetch-client/
+
+# Alembic - ignorar apenas caches e arquivos temporários
+migrations/__pycache__/
+migrations/versions/__pycache__/
+migrations/*.pyc
+migrations/versions/*.pyc
+alembic/__pycache__/
