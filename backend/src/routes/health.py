@@ -1,19 +1,16 @@
 from fastapi import APIRouter
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from datetime import datetime, timezone
+from typing import Dict, Any
 
 router = APIRouter()
 
-@router.get("/health")
-def health_check():
+@router.get("/health", tags=["monitoring"])
+async def health_check() -> Dict[str, Any]:
     """
-    Verifica o status de saúde da API.
-    
-    Returns:
-    - status: Estado atual da API
-    - message: Mensagem detalhada sobre o funcionamento
+    Verifica a saúde da aplicação.
     """
     return {
         "status": "healthy",
-        "message": "API esta funcionando normalmente"
+        "message": "API esta funcionando normalmente",
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }

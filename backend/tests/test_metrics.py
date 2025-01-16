@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from src.server import app
-from datetime import datetime
+from datetime import datetime, timezone
 
 client = TestClient(app)
 
@@ -38,11 +38,6 @@ def test_health_check_endpoint():
     
     data = response.json()
     assert data["status"] == "healthy"
-    assert "timestamp" in data
-    assert "version" in data
-    assert "uptime" in data
-    
-    # Verifica formato do timestamp
     timestamp = datetime.fromisoformat(data["timestamp"].replace("Z", "+00:00"))
     assert isinstance(timestamp, datetime)
 

@@ -16,10 +16,10 @@ def test_health_check():
     """Testa o endpoint de health check"""
     response = client.get("/api/v1/health")
     assert response.status_code == 200
-    assert response.json() == {
-        "status": "healthy",
-        "message": "API esta funcionando normalmente"
-    }
+    data = response.json()
+    assert data["status"] == "healthy"
+    assert data["message"] == "API esta funcionando normalmente"
+    # Não vamos verificar o timestamp pois ele muda a cada execução
 
 def test_ciclo_usuario():
     """Testa o ciclo completo de um usuário: criação e deleção"""
@@ -82,4 +82,4 @@ def test_ciclo_divida():
     # Deleta usuário
     delete_user_response = client.delete(f"/api/v1/usuarios/{user_id}")
     assert delete_user_response.status_code == 200
-    assert data["usuario_id"] == user_id
+    assert delete_user_response.json()["message"] == "Usuário deletado com sucesso"
