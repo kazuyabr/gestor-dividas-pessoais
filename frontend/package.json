@@ -12,7 +12,8 @@
     "clean": "rd /s /q dist && rd /s /q node_modules",
     "reset": "yarn clean && yarn install"
   },
-  "private": true,  "dependencies": {
+  "private": true,
+  "dependencies": {
     "@angular/animations": "^17.0.0",
     "@angular/common": "^17.0.0",
     "@angular/compiler": "^17.0.0",

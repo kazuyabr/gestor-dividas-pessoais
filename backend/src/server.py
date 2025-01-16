@@ -1,13 +1,18 @@
-from .routes import dashboard_routes
 from fastapi import FastAPI
+from .middleware.monitoring import monitoring_middleware
+from .core.monitoring import setup_logging
+from .routes import dashboard_routes, metrics
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from .routes import usuarios_routes, dividas_routes, health, auth_routes
 from .database.database import engine
 from .models import models
-from .config import settings
+from .config.settings import settings
 
 models.Base.metadata.create_all(bind=engine)
+
+# Configuração de logs
+setup_logging()
 
 app = FastAPI(
     title="Gestor de Dívidas Pessoais API",
@@ -90,6 +95,9 @@ tags_metadata = [
 
 app.openapi_tags = tags_metadata
 
+# Adicionar middleware de monitoramento
+app.middleware("http")(monitoring_middleware)
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -128,4 +136,10 @@ app.include_router(
     dashboard_routes.router,
     prefix="/api/v1/dashboard",
     tags=["dashboard"]
+)
+
+app.include_router(
+    metrics.router,
+    prefix="/api/v1",
+    tags=["monitoring"]
 )

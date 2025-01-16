@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from typing import Optional
-from ..config import settings
+from ..config.settings import settings
 
 # Configurações
 SECRET_KEY = settings.JWT_SECRET_KEY
